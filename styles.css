@@ -32,6 +32,19 @@ body.profile-mode .public-links .social-pill:nth-child(5){background:linear-grad
 body.profile-mode .public-links .social-icon{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:#fff6;color:#33204c;font-size:21px;box-shadow:inset 0 2px 3px #fff9}
 body.profile-mode .public-links .social-label{flex:1;text-align:left}
 body.profile-mode .public-links .social-arrow{font-size:22px;font-weight:500;margin-right:3px}
+body.profile-mode .public-links .social-icon svg{display:block;width:24px;height:24px;overflow:visible}
+body.profile-mode .public-links .social-icon.icon-facebook svg{width:25px;height:25px}
+body.profile-mode .public-links .social-icon.icon-tiktok svg{width:26px;height:26px}
+body.profile-mode .public-links .social-icon.icon-messenger svg{width:27px;height:27px}
+body.profile-mode .public-links .social-pill{position:relative;isolation:isolate;overflow:hidden}
+body.profile-mode .public-links .social-pill:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;background:linear-gradient(112deg,#fff5 0%,transparent 32%,transparent 70%,#fff2 100%);opacity:.7}
+body.profile-mode .public-links .social-pill:after{content:"";position:absolute;top:-35%;left:-65%;width:38%;height:170%;pointer-events:none;transform:rotate(22deg);background:linear-gradient(90deg,transparent,#fff5,transparent);animation:pill-glint 8s ease-in-out infinite}
+body.profile-mode .public-links .social-pill>*{position:relative;z-index:1}
+body.profile-mode .public-card{box-shadow:0 32px 90px #08041275,inset 0 1px #ffffff19,0 0 40px color-mix(in srgb,var(--profile-color) 12%,transparent)}
+body.profile-mode .public-card:after{content:"";position:absolute;inset:-20%;z-index:0;pointer-events:none;background:linear-gradient(112deg,transparent 38%,#fff0 43%,#ffffff0b 48%,#ffffff17 50%,#ffffff08 52%,transparent 58%);transform:translateX(-35%) rotate(4deg);animation:card-glow 12s ease-in-out infinite}
+body.profile-mode .public-card-glow{filter:blur(3px)}
+@keyframes pill-glint{0%,68%,100%{left:-65%;opacity:0}74%{opacity:.85}88%{left:130%;opacity:0}}
+@keyframes card-glow{0%,100%{transform:translateX(-30%) rotate(4deg);opacity:.4}50%{transform:translateX(30%) rotate(4deg);opacity:1}}
 body.profile-mode .public-card .card-foot{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;margin-top:auto;padding-top:20px;border-top:1px solid #f4e6ff55;color:#f9e7ff}
 body.profile-mode .connect-sparkles{color:#ffd28b;font-size:22px;letter-spacing:6px}
 body.profile-mode .public-card .card-foot strong{font-size:18px;font-weight:500;letter-spacing:1px;color:#fff1ff}

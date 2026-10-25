@@ -78,8 +78,16 @@ function renderLinks(target, links, compact = false) {
     anchor.href = url.toString();
     const name = link.label.slice(0, 35);
     const key = name.toLowerCase();
-    const icons = { instagram: "◎", facebook: "f", tiktok: "♪", messenger: "••", email: "✉", mail: "✉", website: "↗", linkedin: "in", youtube: "▶", spotify: "♫" };
-    const icon = document.createElement("span"); icon.className = "social-icon"; icon.textContent = icons[key] || name.slice(0, 1).toUpperCase();
+    const iconMarkup = {
+      instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="17.6" cy="6.6" r="1.4" fill="currentColor"/></svg>',
+      facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0866ff" d="M13.4 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.2V13H10v8z"/></svg>',
+      tiktok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25f4ee" d="M15.2 3h3.1c.2 2 1.3 3.6 3.2 4.4v3.2a9 9 0 0 1-3.2-1.2v6.2a6.5 6.5 0 1 1-6.5-6.5c.4 0 .8 0 1.2.1v3.4a3.2 3.2 0 1 0 2.2 3V3z" transform="translate(-1.2 1)"/><path fill="#fe2c55" d="M15.2 3h3.1c.2 2 1.3 3.6 3.2 4.4v3.2a9 9 0 0 1-3.2-1.2v6.2a6.5 6.5 0 1 1-6.5-6.5c.4 0 .8 0 1.2.1v3.4a3.2 3.2 0 1 0 2.2 3V3z" transform="translate(-.25 .35)"/><path fill="#111" d="M15.2 3h3.1c.2 2 1.3 3.6 3.2 4.4v3.2a9 9 0 0 1-3.2-1.2v6.2a6.5 6.5 0 1 1-6.5-6.5c.4 0 .8 0 1.2.1v3.4a3.2 3.2 0 1 0 2.2 3V3z" transform="translate(-.7 .7)"/></svg>',
+      messenger: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0866ff" d="M12 2C6.48 2 2 6.14 2 11.25c0 2.9 1.45 5.47 3.72 7.18.2.15.32.38.32.63l.06 2.03a.9.9 0 0 0 1.26.8l2.27-1a1.1 1.1 0 0 1 .73-.05c.52.14 1.07.21 1.64.21 5.52 0 10-4.14 10-9.25S17.52 2 12 2z"/><path fill="#fff" d="m5.82 13.7 3.07-4.87a1.57 1.57 0 0 1 2.27-.42l2.44 1.83a.63.63 0 0 0 .76 0l3.3-2.5c.44-.33 1.02.2.72.66l-3.07 4.87a1.57 1.57 0 0 1-2.27.42l-2.44-1.83a.63.63 0 0 0-.76 0l-3.3 2.5c-.44.33-1.02-.2-.72-.66z"/></svg>',
+    };
+    const icon = document.createElement("span");
+    icon.className = `social-icon${iconMarkup[key] ? ` icon-${key}` : ""}`;
+    if (iconMarkup[key]) icon.innerHTML = iconMarkup[key];
+    else icon.textContent = ({ email: "✉", mail: "✉", website: "↗", linkedin: "in", youtube: "▶", spotify: "♫" })[key] || name.slice(0, 1).toUpperCase();
     const label = document.createElement("span"); label.className = "social-label"; label.textContent = name;
     const arrow = document.createElement("span"); arrow.className = "social-arrow"; arrow.textContent = "↗";
     anchor.append(icon, label, arrow);
