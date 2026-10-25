@@ -5,7 +5,7 @@ const PHOTO_BUCKET = "profile-photos";
 const MAX_PHOTO_BYTES = 2 * 1024 * 1024;
 
 const demoProfile = {
-  id: "demo", display_name: "Alex Morgan", slug: "alex-morgan",
+  id: "demo", display_name: "Clark Aga", slug: "clark-aga",
   bio: "Creative mind, coffee enthusiast, and professional playlist curator.",
   avatar_url: null, theme: { card: "#3b2854", text: "#ffffff", accent: "#c8a8ff", background: "#251642" }, published: true,
   socials: [
@@ -58,11 +58,14 @@ function setAvatar(element, profile) {
   element.style.backgroundImage = "";
   const initials = (profile.display_name || "?").trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
   const text = element.querySelector("span");
-  if (text) text.textContent = initials;
   const url = photoUrl(profile);
-  if (url) element.style.backgroundImage = `linear-gradient(145deg, #17112822, #17112855), url("${url}")`;
+  if (url) {
+    element.style.backgroundImage = 'linear-gradient(145deg, #17112822, #17112855), url("' + url + '")';
+    if (text) text.textContent = "";
+  } else if (text) {
+    text.textContent = initials;
+  }
 }
-
 function renderLinks(target, links, compact = false) {
   target.replaceChildren();
   normalizeSocialLinks(links).forEach((link) => {
@@ -111,6 +114,9 @@ function showProfile(profile, offlinePreview = false) {
   const accent = profile.theme?.accent || "#c8a8ff";
   card.style.setProperty("--profile-color", /^#[0-9a-f]{6}$/i.test(accent) ? accent : "#c8a8ff");
   $("#public-name").textContent = profile.display_name;
+  const nickname = String(profile.nickname || "").trim();
+  $("#public-nickname").textContent = nickname;
+  $("#public-nickname").classList.toggle("hidden", !nickname);
   $("#public-bio").textContent = profile.bio || "A little bit of me, all in one place.";
   setAvatar($("#public-avatar"), profile);
   renderLinks($("#public-links"), profile.socials);
@@ -138,7 +144,7 @@ async function routeToCurrentProfile() {
     return;
   }
   showProfile({ display_name: "Loading profile…", bio: "", slug, socials: {}, theme: { accent: "#c8a8ff" } });
-  const { data, error } = await client.from("profiles").select("display_name,slug,bio,avatar_url,theme,socials").eq("slug", slug).eq("published", true).maybeSingle();
+  const { data, error } = await client.from("profiles").select("display_name,nickname,slug,bio,avatar_url,theme,socials").eq("slug", slug).eq("published", true).maybeSingle();
   if (error || !data) { showNotFound(); return; }
   showProfile(data);
 }
@@ -252,6 +258,7 @@ async function editProfile(id) {
   const form = $("#profile-form");
   form.reset();
   form.elements.display_name.value = data.display_name;
+  form.elements.nickname.value = data.nickname || "";
   form.elements.slug.value = data.slug;
   form.elements.slug.disabled = true;
   form.elements.bio.value = data.bio || "";
@@ -297,6 +304,7 @@ async function saveProfile(event) {
   catch (error) { message.textContent = error.message; return; }
   const profile = {
     display_name: displayName,
+    nickname: String(formData.get("nickname") || "").trim() || null,
     slug,
     bio: String(formData.get("bio") || "").trim(),
     theme: { ...(editingProfile?.theme || { card: "#3b2854", text: "#ffffff", background: "#251642" }), accent: String(formData.get("theme_color") || "#c8a8ff") },

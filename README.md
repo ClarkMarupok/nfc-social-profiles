@@ -10,7 +10,7 @@ A small, beginner-friendly static site for NFC cards and shareable social profil
 - Supabase Row Level Security policies in [`supabase/setup.sql`](supabase/setup.sql).
 - A GitHub Pages workflow in [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
 
-The page shows an Alex Morgan sample profile until Supabase is connected. That sample is only a preview; it is not stored in Supabase or publicly published.
+The page shows a Clark Aga sample profile until Supabase is connected. That sample is only a preview; it is not stored in Supabase or publicly published.
 
 ## 1. Connect your Supabase project
 
@@ -48,7 +48,7 @@ Before deployment, add your test and production site addresses to **Authenticati
 4. Push the site files to the repository's `main` branch. The included workflow publishes this static site; check the **Actions** tab for its result.
 5. The site address will be `https://clarkmarupok.github.io/nfc-social-profiles/` (GitHub may take a few minutes to publish it).
 
-Profile links use the query-string slug, for example `https://clarkmarupok.github.io/nfc-social-profiles/?p=alex-morgan`. This format works on GitHub Pages without extra rewrite setup. Keep slugs stable after sharing them; the database also blocks slug changes.
+Profile links use the query-string slug, for example `https://clarkmarupok.github.io/nfc-social-profiles/?p=clark-aga`. This format works on GitHub Pages without extra rewrite setup. Keep slugs stable after sharing them; the database also blocks slug changes.
 
 For another free static host, upload the folder to Netlify or Cloudflare Pages and add that site's origin in Supabase Auth URL Configuration. No server or build step is required.
 
